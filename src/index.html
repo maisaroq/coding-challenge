@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Page Title</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <form id="location_form">
+      <label for="min_lat">Min. latitude</label><br>
+      <input id="min_lat" name="min_lat" type="text" placeholder="52.51668873124802"><br>
+
+      <label for="min_lon">Min. longitude</label><br>
+      <input id="min_lon" name="min_lon" type="text" placeholder="13.418159535542088"><br>
+
+      <label for="max_lat">Max. latitude</label><br>
+      <input id="max_lat" name="max_lat" type="text" placeholder="52.51668873124802"><br>
+
+      <label for="max_lon">Max. longitude</label><br>
+      <input id="max_lon" name="max_lon" type="text" placeholder="13.418159535542088"><br>
+
+      <button id="" type="submit">Search</button>
+    </form>
+    <pre id="result">
+    </pre>
+
+    <script>
+      const form = document.getElementById("location_form")
+      form.addEventListener("submit", (event) => {
+        event.preventDefault()
+
+        const min_lat = document.getElementById("min_lat").value
+        const min_lon = document.getElementById("min_lon").value
+        const max_lat = document.getElementById("max_lat").value
+        const max_lon = document.getElementById("max_lon").value
+
+        axios.get("/location", {
+          params: {
+            min_lat: min_lat,
+            min_lon: min_lon,
+            max_lat: max_lat,
+            max_lon: max_lon,
+          }
+        }).then((res) => {
+          const container = document.getElementById("result")
+          container.innerHTML = JSON.stringify(res.data, null, 2)
+        })
+
+
+      })
+    </script>
+
+  </body>
+</html>
